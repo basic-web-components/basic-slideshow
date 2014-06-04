@@ -34,12 +34,16 @@ Polymer( "basic-slideshow", {
 
   next: function() {
     this.super();
-    this._tick();
+    if ( this.playing ) {
+      this._tick();
+    }
   },
 
   previous: function() {
     this.super();
-    this._tick();
+    if ( this.playing ) {
+      this._tick();
+    }
   },
 
   ready: function() {
@@ -53,11 +57,13 @@ Polymer( "basic-slideshow", {
   },
 
   start: function() {
+    this.playing = true;
     this._tick();
   },
 
   stop: function() {
     clearTimeout( this._timeout );
+    this.playing = false;
   },
 
   _tick: function() {
