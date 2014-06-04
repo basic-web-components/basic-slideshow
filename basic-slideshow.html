@@ -1,5 +1,11 @@
 <!--
 Cycles through a set of child elements (e.g., images).
+
+For the time being, image slideshows really only work well for slideshows which
+size to the images; it's hard to make the slideshow bigger (for a full-page or
+full-screen slideshow, say) and scale the images up to fit.
+
+@element basic-slideshow
 -->
 
 <link rel="import" href="../basic-sequence/basic-sequence.html">
@@ -9,9 +15,10 @@ Cycles through a set of child elements (e.g., images).
 <template>
   <style>
   polyfill-next-selector {
-    content: ':host([effect=crossfade]) > .sequenceTransition';
+    content: ':host([effect=crossfade]) #effectContainer > .sequenceTransition';
   }
   :host([effect=crossfade]) ::content .sequenceTransition {
+    /* Slow down the standard crossfade effect. */
     transition: opacity 2s;
   }
   </style>
@@ -30,7 +37,17 @@ Polymer( "basic-slideshow", {
     }
   },
 
-  interval: 3000, // Three seconds
+  /**
+   * The number of milliseconds (thousandths of a second) that will elapse
+   * before the slideshow advances to the next slide. This time is measured from
+   * the moment the transition to the next slide begins, so it must be longer
+   * than the transition time or else the transition will not have time to
+   * complete.
+   *
+   * @property interval
+   * @default 3000
+   */
+  interval: 3000,
 
   next: function() {
     this.super();
