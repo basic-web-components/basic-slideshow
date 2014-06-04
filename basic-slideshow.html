@@ -30,12 +30,25 @@ Polymer( "basic-slideshow", {
     }
   },
 
-  interval: 2000, // Three seconds
+  interval: 3000, // Three seconds
+
+  next: function() {
+    this.super();
+    this._tick();
+  },
+
+  previous: function() {
+    this.super();
+    this._tick();
+  },
 
   ready: function() {
     this.super();
     if ( this.effect == null ) {
       this.effect = "crossfade";
+    }
+    if ( this.wrapAround == null ) {
+      this.wrapAround = true;
     }
   },
 
@@ -50,7 +63,6 @@ Polymer( "basic-slideshow", {
   _tick: function() {
     this._timeout = setTimeout( function() {
       this.next();
-      this._tick();
     }.bind( this ), this.interval );
   },
 
