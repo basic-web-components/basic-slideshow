@@ -1,0 +1,62 @@
+<!--
+Cycles through a set of child elements (e.g., images).
+-->
+
+<link rel="import" href="../basic-sequence/basic-sequence.html">
+
+<polymer-element name="basic-slideshow" extends="basic-sequence" attributes="autoStart interval">
+
+<template>
+  <style>
+  polyfill-next-selector {
+    content: ':host([effect=crossfade]) > .sequenceTransition';
+  }
+  :host([effect=crossfade]) ::content .sequenceTransition {
+    transition: opacity 2s;
+  }
+  </style>
+  <shadow></shadow>
+</template>
+
+<script>
+Polymer( "basic-slideshow", {
+
+  autoStart: true,
+
+  attached: function() {
+    this.super();
+    if ( this.autoStart ) {
+      this.start();
+    }
+  },
+
+  interval: 2000, // Three seconds
+
+  ready: function() {
+    this.super();
+    if ( this.effect == null ) {
+      this.effect = "crossfade";
+    }
+  },
+
+  start: function() {
+    this._tick();
+  },
+
+  stop: function() {
+    clearTimeout( this._timeout );
+  },
+
+  _tick: function() {
+    this._timeout = setTimeout( function() {
+      this.next();
+      this._tick();
+    }.bind( this ), this.interval );
+  },
+
+  _timeour: null
+  
+});
+</script>
+
+</polymer-element>
