@@ -2,8 +2,8 @@
 Cycles through a set of child elements (e.g., images).
 
 For the time being, image slideshows really only work well for slideshows which
-size to the images; it's hard to make the slideshow bigger (for a full-page or
-full-screen slideshow, say) and scale the images up to fit.
+size to the images. It's currently hard to make the slideshow bigger (say, for a
+full-page or full-screen slideshow) and have it scale the images up to fit.
 
 @element basic-slideshow
 -->
@@ -28,6 +28,13 @@ full-screen slideshow, say) and scale the images up to fit.
 <script>
 Polymer( "basic-slideshow", {
 
+  /**
+   * If true, start the slideshow when the element is loaded.
+   *
+   * @property autoStart
+   * @type boolean
+   * @default true
+   */
   autoStart: true,
 
   attached: function() {
@@ -41,8 +48,8 @@ Polymer( "basic-slideshow", {
    * The number of milliseconds (thousandths of a second) that will elapse
    * before the slideshow advances to the next slide. This time is measured from
    * the moment the transition to the next slide begins, so it must be longer
-   * than the transition time or else the transition will not have time to
-   * complete.
+   * than that transition time. Otherwise, the transition will not have time to
+   * complete before the transition to the next slide is begun.
    *
    * @property interval
    * @default 3000
@@ -73,11 +80,21 @@ Polymer( "basic-slideshow", {
     }
   },
 
+  /**
+   * Start the slideshow.
+   *
+   * @method start
+   */
   start: function() {
     this.playing = true;
     this._tick();
   },
 
+  /**
+   * Stop/pause the slideshow.
+   *
+   * @method stop
+   */
   stop: function() {
     clearTimeout( this._timeout );
     this.playing = false;
