@@ -18,8 +18,12 @@ full-page or full-screen slideshow) and have it scale the images up to fit.
   polyfill-next-selector {
     content: ':host([effect=crossfade]) #effectContainer > .sequenceTransition';
   }
-  :host([effect=crossfade]) ::content .sequenceTransition {
+  :host([effect=crossfade]) ::content > .sequenceTransition {
     /* Slow down the standard crossfade effect. */
+    /*
+     * BUG: This used to work, but now no longer gets picked up. The polyfilled
+     * version does, but the native version doesn't.
+     */
     transition: opacity 1.5s;
   }
   </style>
